@@ -218,6 +218,35 @@
                     border-bottom: 35px solid #d9825b;
                 }
 
+        /* スクロールアニメーション */
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+            .fade-up.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .work-banner:nth-child(1) {
+            transition-delay: 0s;
+        }
+
+        .work-banner:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        .work-banner:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .work-banner:nth-child(4) {
+            transition-delay: 0.45s;
+        }
+
         /* WORKS */
 
         .works-area {
@@ -389,6 +418,7 @@
         }
 
         @media screen and (max-width: 800px) {
+
             nav {
                 gap: 18px;
                 font-size: 14px;
@@ -429,6 +459,7 @@
             }
         }
     </style>
+
 </head>
 
 <body>
@@ -489,7 +520,9 @@
 
             <div class="card">
                 <div class="icon leaf"></div>
+
                 <h3>YouTube動画編集</h3>
+
                 <p>
                     視聴者に楽しんでもらうための
                     構成・編集・分析を行ってきました。
@@ -498,7 +531,9 @@
 
             <div class="card">
                 <div class="icon game"></div>
+
                 <h3>プログラミング</h3>
+
                 <p>
                     C / C++ / C# を中心に学習し、
                     ゲーム開発を通して実装経験を積んでいます。
@@ -507,7 +542,9 @@
 
             <div class="card">
                 <div class="icon house"></div>
+
                 <h3>Unityゲーム開発</h3>
+
                 <p>
                     個人制作・チーム制作の両方を経験し、
                     企画から完成まで取り組んでいます。
@@ -524,11 +561,14 @@
 
         <div class="works-area">
 
-            <div class="work-banner pink">
+            <div class="work-banner pink fade-up">
 
-                <img src="Pet.png" class="work-sticker sticker-pet" alt="ペット">
+                <img src="Pet.png"
+                     class="work-sticker sticker-pet"
+                     alt="ペット">
 
                 <div class="work-panel">
+
                     <h3>DISASTER ON GRID</h3>
 
                     <p class="work-type">
@@ -541,18 +581,20 @@
                         異なる視点と役割を活かした協力プレイが特徴です。
                     </p>
 
-                    <a href="#" class="work-link">
+                    <a href="disaster.html" class="work-link">
                         ▶ ここからチェック
                     </a>
+
                 </div>
 
                 <div class="work-visual disaster-visual"></div>
 
             </div>
 
-            <div class="work-banner red">
+            <div class="work-banner red fade-up">
 
                 <div class="work-panel">
+
                     <h3>蟲毒</h3>
 
                     <p class="work-type">
@@ -565,20 +607,24 @@
                         二部構成のゲーム体験を制作しました。
                     </p>
 
-                    <a href="#" class="work-link">
+                    <a href="kodoku.html" class="work-link">
                         ▶ ここからチェック
                     </a>
+
                 </div>
 
                 <div class="work-visual kodoku-visual"></div>
 
             </div>
 
-            <div class="work-banner blue">
+            <div class="work-banner blue fade-up">
 
-                <img src="hituji.png" class="work-sticker sticker-sheep" alt="ひつじ">
+                <img src="hituji.png"
+                     class="work-sticker sticker-sheep"
+                     alt="ひつじ">
 
                 <div class="work-panel">
+
                     <h3>SelfLoop</h3>
 
                     <p class="work-type">
@@ -591,20 +637,24 @@
                         「最大の敵は自分自身」をテーマに制作しました。
                     </p>
 
-                    <a href="#" class="work-link">
+                    <a href="selfloop.html" class="work-link">
                         ▶ ここからチェック
                     </a>
+
                 </div>
 
                 <div class="work-visual selfloop-visual"></div>
 
             </div>
 
-            <div class="work-banner yellow">
+            <div class="work-banner yellow fade-up">
 
-                <img src="Player.png" class="work-sticker sticker-player" alt="プレイヤー">
+                <img src="Player.png"
+                     class="work-sticker sticker-player"
+                     alt="プレイヤー">
 
                 <div class="work-panel">
+
                     <h3>YouTube</h3>
 
                     <p class="work-type">
@@ -617,9 +667,10 @@
                         動画企画・編集・分析を行っています。
                     </p>
 
-                    <a href="#" class="work-link">
+                    <a href="youtube.html" class="work-link">
                         ▶ ここからチェック
                     </a>
+
                 </div>
 
                 <div class="work-visual youtube-visual"></div>
@@ -635,6 +686,7 @@
         <h2>SKILLS</h2>
 
         <div class="skill-list">
+
             <div class="skill">Unity</div>
             <div class="skill">C#</div>
             <div class="skill">C++</div>
@@ -644,13 +696,40 @@
             <div class="skill">PHP</div>
             <div class="skill">GitHub</div>
             <div class="skill">動画編集</div>
+
         </div>
 
     </section>
 
     <footer>
-        <p>© 2026 Kotaro Miyamoto Portfolio</p>
+        <p>
+            © 2026 Kotaro Miyamoto Portfolio
+        </p>
     </footer>
+
+    <script>
+
+        const fadeItems = document.querySelectorAll('.fade-up');
+
+        const observer = new IntersectionObserver(function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+
+            });
+
+        }, {
+            threshold: 0.2
+        });
+
+        fadeItems.forEach(function (item) {
+            observer.observe(item);
+        });
+
+    </script>
 
 </body>
 
