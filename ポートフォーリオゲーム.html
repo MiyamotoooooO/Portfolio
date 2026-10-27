@@ -223,13 +223,13 @@ kbd{font-family:var(--f-dot);font-size:14px;min-width:38px;text-align:center;pad
    ・download… ダウンロードページのURL（"" のままならボタンは押せません）
    ========================================================= */
 const SITE = {
-  name: "YOUR NAME",
-  initial: "Y",
-  about: "Unityでゲームをつくっています。遊ぶ人が「自分で操作をつくる」ような、ルールそのものを触れるゲームが好きです。企画からプログラム、演出まで手を動かしながら考えています。",
-  skills: ["Unity", "C#", "2Dアクション", "3D", "ドット絵", "ステージ設計", "GitHub"],
+  name: "宮本幸太郎",
+  initial: "宮",
+  about: "大原学園熊本情報ITクリエイター専門学校 ゲーム・クリエイター学科で、ゲーム開発を学んでいます。Unityで個人制作・チーム制作の両方を経験し、企画から実装、完成まで取り組んできました。YouTubeでは登録者30,000人規模のチャンネルを運営し、遊ぶ人・見る人の視点で考える力を培いました。",
+  skills: ["Unity", "C#", "C++", "C", "HTML", "CSS", "PHP", "GitHub", "動画編集"],
   youtube: "https://www.youtube.com/@wakason",                     // ← チャンネルのURL（例："https://www.youtube.com/@○○○"）
   youtubeName: "@wakason",    // ← ボタンに小さく出すチャンネル名
-  copyright: "© YOUR NAME"
+  copyright: "© 2026 Kotaro Miyamoto Portfolio"
 };
 
 const GAMES = [
@@ -259,7 +259,7 @@ const GAMES = [
     ],
     controls: [["Tab", "キー設定をひらく"], ["Esc", "設定"], ["F", "調べる・話す"], ["?", "移動やジャンプは、拾ったキーで自由に決める"]],
     shots: ["", "", ""],              // ← スクリーンショットを入れる
-    download: ""                      // ← ダウンロードページのURL
+    download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/KeyEscape.zip"
   },
   {
     id: "canvas-city",
@@ -286,7 +286,79 @@ const GAMES = [
     ],
     controls: [["E", "パレット"], ["Alt", "島を回転"], ["P", "早送り"]],
     shots: ["", ""],
-    download: ""
+    download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/CanvasCity.zip"
+  },
+  {
+    id: "selfloop",
+    title: "SelfLoop",
+    sub: "セルフループ",
+    color: "#45c48a",
+    tags: ["パズルアクション", "個人制作"],
+    status: "完成",
+    cover: "",
+    catch: "最大の敵は、自分自身。",
+    story: "過去の自分の行動を記録して、それを利用しながら攻略するパズルアクションゲーム。さっきの自分が押したスイッチ、さっきの自分が乗った足場。自分と協力しながら、ときには自分に邪魔されながら道をひらいていく。",
+    spec: [
+      ["ジャンル", "パズルアクション"],
+      ["対応機種", "PC（Windows）"],
+      ["エンジン", "Unity / C#"],
+      ["制作", "個人制作"],
+      ["担当", "（担当した部分を書く）"]
+    ],
+    features: [
+      ["過去の自分を利用する", "記録した自分の動きがもう一度再生され、仕掛けを動かす手助けになる。"],
+      ["テーマは「最大の敵は自分自身」", "うまく動けば味方、まちがえれば邪魔になる。過去の自分との付き合い方が攻略のかぎ。"]
+    ],
+    shots: ["", ""],
+    download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/SelefLoop.zip"
+  },
+  {
+    id: "time-project",
+    title: "TIME PROJECT",
+    sub: "GFF AWARD 2026 出展作品",
+    color: "#ff8a3d",
+    tags: ["GFF AWARD", "チーム制作"],
+    status: "GFF AWARD 2026",
+    cover: "",
+    catch: "（キャッチコピーを書く）",
+    story: "GFF AWARD 2026 に向けて制作した作品です。（どんなゲームか、2〜3文で書く）",
+    spec: [
+      ["ジャンル", "（ジャンルを書く）"],
+      ["対応機種", "PC（Windows）"],
+      ["エンジン", "Unity / C#"],
+      ["制作", "（個人制作／チーム制作）"],
+      ["担当", "（担当した部分を書く）"]
+    ],
+    features: [
+      ["（見どころ1）", "（説明を書く）"],
+      ["（見どころ2）", "（説明を書く）"]
+    ],
+    shots: ["", ""],
+    download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/GFF_AWARD.zip"
+  },
+  {
+    id: "pinball",
+    title: "PINBALL",
+    sub: "ピンボールゲーム",
+    color: "#4f7cff",
+    tags: ["ピンボール"],
+    status: "完成",
+    cover: "",
+    catch: "（キャッチコピーを書く）",
+    story: "Unityで制作したピンボールゲームです。（どんなゲームか、2〜3文で書く）",
+    spec: [
+      ["ジャンル", "ピンボール"],
+      ["対応機種", "PC（Windows）"],
+      ["エンジン", "Unity / C#"],
+      ["制作", "（個人制作／チーム制作）"],
+      ["担当", "（担当した部分を書く）"]
+    ],
+    features: [
+      ["（見どころ1）", "（説明を書く）"],
+      ["（見どころ2）", "（説明を書く）"]
+    ],
+    shots: ["", ""],
+    download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/PinballGame.zip"
   },
   {
     id: "next",
@@ -384,7 +456,7 @@ function openGame(id, fromHash) {
       ${g.controls ? `<section class="sec"><h3>操作</h3><div class="keys">${g.controls.map(([k, d]) => `<div class="keyrow"><kbd>${esc(k)}</kbd><span>${esc(d)}</span></div>`).join("")}</div></section>` : ""}
       <section class="sec dl">
         <a href="${esc(g.download || "#")}" target="_blank" rel="noopener" class="${g.download ? "" : "off"}">⬇ ダウンロード</a>
-        <small>${g.download ? "ダウンロードページがひらきます" : "ダウンロードページは準備中です"}</small>
+        <small>${g.download ? "zipファイルのダウンロードが始まります（Windows向け）" : "ダウンロードは準備中です"}</small>
       </section>
     </div>`;
 
