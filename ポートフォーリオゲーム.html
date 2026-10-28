@@ -168,7 +168,8 @@ footer{text-align:center;font-family:var(--f-dot);font-size:12px;padding-block:0
 .feat p{font-size:14px;color:#3d3a5c}
 .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .shot{position:relative;aspect-ratio:16/9;max-width:100%;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:var(--c)}
-.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.shot .art{position:absolute;inset:0;border:0;border-radius:0;background:#111}
+.shot img{width:100%;height:100%;object-fit:contain;display:block}
 .shot .ph strong{font-size:16px}
 .keys{display:flex;flex-direction:column;gap:8px}
 .keyrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -259,7 +260,7 @@ const GAMES = [
       ["巨大なAキーとのボス戦", "檻でキーを封じられたら、その場でキー設定を組み替えて戦い続ける。"]
     ],
     controls: [["Tab", "キー設定をひらく"], ["Esc", "設定"], ["F", "調べる・話す"], ["?", "移動やジャンプは、拾ったキーで自由に決める"]],
-    shots: ["", "", ""],              // ← スクリーンショットを入れる
+    shots: ["images/key-escape-1.jpg", "images/key-escape-2.jpg", "images/key-escape-3.jpg", "images/key-escape-4.jpg", "images/key-escape-5.jpg"],              // ← スクリーンショットを入れる
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/KeyEscape.zip"
   },
   {
@@ -286,7 +287,7 @@ const GAMES = [
       ["時間と天気", "ゲーム内の時間が流れ、晴れ・くもり・雨・竜巻と天気が変わる。"]
     ],
     controls: [["E", "パレット"], ["Alt", "島を回転"], ["P", "早送り"]],
-    shots: ["", ""],
+    shots: ["images/canvas-city-1.jpg", "images/canvas-city-2.jpg", "images/canvas-city-3.jpg"],
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/CanvasCity.zip"
   },
   {
@@ -311,7 +312,7 @@ const GAMES = [
       ["過去の自分を利用する", "記録した自分の動きがもう一度再生され、仕掛けを動かす手助けになる。"],
       ["テーマは「最大の敵は自分自身」", "うまく動けば味方、まちがえれば邪魔になる。過去の自分との付き合い方が攻略のかぎ。"]
     ],
-    shots: ["", ""],
+    shots: ["images/selfloop-1.jpg", "images/selfloop-2.jpg", "images/selfloop-3.jpg"],
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/SelefLoop.zip"
   },
   {
@@ -335,7 +336,7 @@ const GAMES = [
       ["（見どころ1）", "（説明を書く）"],
       ["（見どころ2）", "（説明を書く）"]
     ],
-    shots: ["", ""],
+    shots: ["images/karatto-cut-1.jpg", "images/karatto-cut-2.jpg", "images/karatto-cut-3.jpg"],
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/PinballGame.zip"
   },
   {
@@ -359,7 +360,7 @@ const GAMES = [
       ["プレイヤーとクリエイター", "ふたりが別々の役割を受け持ち、それぞれの視点から脱出の手がかりを探す。"],
       ["協力して解くパズル", "片方だけでは進めない仕掛けを、声をかけ合いながら攻略する。"]
     ],
-    shots: ["", ""],
+    shots: ["images/disaster-on-the-grid-1.jpg", "images/disaster-on-the-grid-2.jpg", "images/disaster-on-the-grid-3.jpg"],
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/Disaster.on.the.Grid.zip"
   },
   {
