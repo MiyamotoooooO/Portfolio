@@ -239,8 +239,9 @@ const GAMES = [
     sub: "キーエスケープ",
     color: "#ff5d73",
     tags: ["2Dアクション", "個人制作"],
+    pick: true,                       // ← 「おススメ」に出すなら true
     status: "試作品",
-    cover: "",                       // ← ゲーム画面を入れる
+    cover: "images/key-escape.jpg",
     catch: "逃げ出したキーボードを、取り戻せ。",
     story: "人間に酷使されたキーボードたちが、ある日みんなで家を飛び出した。キーをひとつも持たなくなった主人公は、逃げ遅れたKキーと出会い、散らばったキーを探しに外の世界へ向かう。",
     spec: [
@@ -268,7 +269,7 @@ const GAMES = [
     color: "#5ec8f2",
     tags: ["3D", "チーム制作"],
     status: "制作中",
-    cover: "",
+    cover: "images/canvas-city.jpg",
     catch: "絵の具で、何もない島に街を描く。",
     story: "舞台は立方体の形をした浮遊島。島を90度ずつ回転させながら各面を探索し、見つけた絵の具を使って、住民の依頼にこたえながら自分だけの街を育てていく。",
     spec: [
@@ -294,8 +295,9 @@ const GAMES = [
     sub: "セルフループ",
     color: "#45c48a",
     tags: ["パズルアクション", "個人制作"],
+    pick: true,
     status: "完成",
-    cover: "",
+    cover: "images/selfloop.jpg",
     catch: "最大の敵は、自分自身。",
     story: "過去の自分の行動を記録して、それを利用しながら攻略するパズルアクションゲーム。さっきの自分が押したスイッチ、さっきの自分が乗った足場。自分と協力しながら、ときには自分に邪魔されながら道をひらいていく。",
     spec: [
@@ -314,19 +316,19 @@ const GAMES = [
   },
   {
     id: "pinball",
-    title: "PINBALL",
-    sub: "ピンボールゲーム",
-    color: "#4f7cff",
-    tags: ["ピンボール"],
+    title: "カラッとカット！",
+    sub: "宝石ピンボール",
+    color: "#3f7cf0",
+    tags: ["ピンボール", "チーム制作"],
     status: "完成",
-    cover: "",
-    catch: "（キャッチコピーを書く）",
-    story: "Unityで制作したピンボールゲームです。（どんなゲームか、2〜3文で書く）",
+    cover: "images/karatto-cut.jpg",
+    catch: "原石をはじいて、宝石にカット！",
+    story: "Unityで制作した宝石ピンボールです。（どんなゲームか、2〜3文で書く）",
     spec: [
-      ["ジャンル", "ピンボール"],
+      ["ジャンル", "宝石ピンボール"],
       ["対応機種", "PC（Windows）"],
       ["エンジン", "Unity / C#"],
-      ["制作", "（個人制作／チーム制作）"],
+      ["制作", "チーム制作"],
       ["担当", "（担当した部分を書く）"]
     ],
     features: [
@@ -343,7 +345,7 @@ const GAMES = [
     color: "#e0533d",
     tags: ["パズル脱出", "チーム制作"],
     status: "完成",
-    cover: "",
+    cover: "images/disaster-on-the-grid.jpg",
     catch: "ふたつの視点で、脱出しろ。",
     story: "プレイヤーとクリエイターに分かれ、協力しながら攻略するパズル脱出ゲーム。異なる視点と役割を活かした協力プレイで、ひとりでは解けない仕掛けを乗りこえていく。",
     spec: [
@@ -385,7 +387,7 @@ function shellHTML(g) {
   return `<div class="shell" style="--c:${g.color}">
     ${artHTML(g, g.cover, "ゲーム画面をここに")}
     <span class="tag">${esc(g.status || "")}</span>
-    <div class="band"><span class="mark">GW</span><span class="vt">GAME WORKS</span></div>
+    <div class="band"><span class="mark">宮</span><span class="vt">GAME WORKS</span></div>
   </div>`;
 }
 
@@ -401,13 +403,13 @@ else { yt.classList.add("off"); yt.setAttribute("aria-disabled", "true"); $("#yt
 
 /* 棚 */
 $("#shelf").innerHTML = GAMES.map(g => `
-  <button class="case${g.soon ? " soon" : ""}" type="button" data-id="${g.id}" data-tags="${esc(g.tags.join(","))}" ${g.soon ? 'aria-disabled="true"' : ""} aria-label="${esc(g.title)}${g.soon ? "（準備中）" : " をひらく"}">
+  <button class="case${g.soon ? " soon" : ""}" type="button" data-id="${g.id}" data-tags="${esc([...g.tags, ...(g.pick ? ["おススメ"] : [])].join(","))}" ${g.soon ? 'aria-disabled="true"' : ""} aria-label="${esc(g.title)}${g.soon ? "（準備中）" : " をひらく"}">
     ${shellHTML(g)}
     <div class="meta"><h2>${esc(g.title)}</h2><p>${esc(g.tags.join(" / "))}</p></div>
   </button>`).join("");
 
 /* 絞り込み */
-const allTags = ["すべて", ...new Set(GAMES.flatMap(g => g.tags))];
+const allTags = ["すべて", "おススメ", "個人制作", "チーム制作"];
 $("#filters").innerHTML = allTags.map((t, i) => `<button class="chip" type="button" aria-pressed="${i === 0}">${esc(t)}</button>`).join("");
 $("#filters").addEventListener("click", e => {
   const b = e.target.closest(".chip"); if (!b) return;
