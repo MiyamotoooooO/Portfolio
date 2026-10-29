@@ -1,5 +1,10 @@
-<title>GAME WORKS</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow"> <!-- 検索エンジンへのインデックス登録を禁止 -->
+<title>GAME WORKS｜宮本幸太郎 ポートフォリオ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Zen+Maru+Gothic:wght@500;700;900&display=swap">
@@ -186,7 +191,83 @@ kbd{font-family:var(--f-dot);font-size:14px;min-width:38px;text-align:center;pad
   *,*::before,*::after{transition-duration:0s!important;transition-delay:0s!important;animation:none!important}
 }
 </style>
+<style>
+/* ブラウザの初期スタイルをそろえる */
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
 
+<style>
+/* ---------- パスワード画面 ---------- */
+html.locked body > *:not(#gate){display:none!important}
+#gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:var(--sun);
+  background-image:radial-gradient(var(--sun-deep) 2.2px,transparent 2.6px);background-size:22px 22px}
+html:not(.locked) #gate{display:none}
+.gate-card{width:min(420px,100%);background:var(--paper);border:3px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);padding:28px 24px;text-align:center}
+.gate-card h1{margin:0;font-family:var(--f-display);font-weight:400;font-size:40px;line-height:1;color:#fff;-webkit-text-stroke:2px var(--ink);text-shadow:3px 3px 0 var(--ink),5px 5px 0 var(--pop)}
+.gate-card p{margin:14px 0 18px;font-weight:700}
+.gate-row{display:flex;gap:8px}
+.gate-row input{flex:1;min-width:0;font:inherit;font-size:16px;padding:10px 14px;border:3px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink)}
+.gate-row button{font:inherit;font-weight:900;padding:10px 18px;border:3px solid var(--ink);border-radius:999px;background:var(--pop);color:#fff;cursor:pointer;box-shadow:0 4px 0 var(--ink)}
+.gate-row button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.gate-msg{min-height:1.5em;margin-top:10px;font-weight:700;color:#c62839}
+.gate-card.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+</style>
+<script>
+/* パスワード画面：開くまでページを隠す。一度開けば、ブラウザを閉じるまで再入力は不要 */
+(function(){try{if(sessionStorage.getItem("gw-ok")!=="1")document.documentElement.classList.add("locked")}catch(e){document.documentElement.classList.add("locked")}})();
+</script>
+</head>
+<body>
+<div id="gate">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <h1>GAME<br>WORKS</h1>
+    <p>パスワードを入力してください</p>
+    <div class="gate-row">
+      <input id="gatePass" type="password" aria-label="パスワード" placeholder="パスワード" autofocus>
+      <button type="submit">ひらく</button>
+    </div>
+    <div class="gate-msg" id="gateMsg" role="alert"></div>
+  </form>
+</div>
+<script>
+/* =========================================================
+   パスワードの設定
+   GATE_HASH … パスワードを暗号化（SHA-256）した文字列。
+   パスワードそのものはここには書きません。
+   ========================================================= */
+const GATE_SALT = "gameworks-miyamoto:";
+const GATE_HASH = "41254ef96cf59d09e294d614ac3f8567db2ffb8104ae4d800c00fc2e8de668b5";
+
+function sha256(str){
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const b=new TextEncoder().encode(str),l=b.length,n=((l+9+63)>>6)<<6,m=new Uint8Array(n);m.set(b);m[l]=0x80;
+  const dv=new DataView(m.buffer);dv.setUint32(n-4,l*8);
+  let h=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const w=new Array(64);
+  const r=(x,y)=>(x>>>y)|(x<<(32-y));
+  for(let o=0;o<n;o+=64){
+    for(let i=0;i<16;i++)w[i]=dv.getUint32(o+i*4);
+    for(let i=16;i<64;i++){const s0=r(w[i-15],7)^r(w[i-15],18)^(w[i-15]>>>3),s1=r(w[i-2],17)^r(w[i-2],19)^(w[i-2]>>>10);w[i]=(w[i-16]+s0+w[i-7]+s1)|0}
+    let[a,b2,c,d,e,f,g,hh]=h;
+    for(let i=0;i<64;i++){const S1=r(e,6)^r(e,11)^r(e,25),ch=(e&f)^(~e&g),t1=(hh+S1+ch+K[i]+w[i])|0,S0=r(a,2)^r(a,13)^r(a,22),mj=(a&b2)^(a&c)^(b2&c),t2=(S0+mj)|0;hh=g;g=f;f=e;e=(d+t1)|0;d=c;c=b2;b2=a;a=(t1+t2)|0}
+    h=[h[0]+a,h[1]+b2,h[2]+c,h[3]+d,h[4]+e,h[5]+f,h[6]+g,h[7]+hh].map(x=>x|0);
+  }
+  return h.map(x=>(x>>>0).toString(16).padStart(8,"0")).join("");
+}
+document.getElementById("gateForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=document.getElementById("gatePass").value;
+  if(sha256(GATE_SALT+v)===GATE_HASH){
+    try{sessionStorage.setItem("gw-ok","1")}catch(_){}
+    document.documentElement.classList.remove("locked");
+  }else{
+    const c=document.getElementById("gateForm");document.getElementById("gateMsg").textContent="パスワードがちがいます";
+    c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake");
+  }
+});
+</script>
 <header class="top">
   <h1 class="logo">GAME<br>WORKS<small>▶ PRESS START</small></h1>
   <div class="who" id="who"></div>
@@ -494,3 +575,5 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") closeGame();
 window.addEventListener("hashchange", () => { const id = location.hash.slice(1); id ? openGame(id, true) : closeGame(); });
 if (location.hash.length > 1) openGame(location.hash.slice(1), true);
 </script>
+</body>
+</html>
