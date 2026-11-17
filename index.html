@@ -173,6 +173,11 @@ footer{text-align:center;font-family:var(--f-dot);font-size:12px;padding-block:0
 .feat{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:14px 16px;min-width:0}
 .feat b{display:block;font-weight:900;font-size:16px;line-height:1.4;margin-bottom:4px}
 .feat p{font-size:14px;color:#3d3a5c}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;counter-reset:pt}
+.points li{counter-increment:pt;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:14px 16px}
+.points li::before{content:counter(pt);grid-row:span 2;width:34px;height:34px;border-radius:50%;background:var(--c);border:2.5px solid var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-size:16px;-webkit-text-stroke:1px var(--ink)}
+.points b{font-weight:900;font-size:16px;line-height:1.5}
+.points p{margin:0;font-size:14px;color:#3d3a5c;max-width:none}
 .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .shot{position:relative;aspect-ratio:16/9;max-width:100%;border:2px solid var(--ink);border-radius:10px;overflow:hidden;background:var(--c)}
 .shot .art{position:absolute;inset:0;border:0;border-radius:0;background:#111}
@@ -342,6 +347,14 @@ const GAMES = [
       ["ギミックのあるステージ", "流れる川、レバーで架かる跳ね橋、攻撃で壊せる石、レーザーと落石。持っているキーで攻略の仕方が変わる。"],
       ["巨大なAキーとのボス戦", "檻でキーを封じられたら、その場でキー設定を組み替えて戦い続ける。"]
     ],
+    // ↓ 工夫したところ（[見出し, 説明] を好きなだけ並べられます）
+    points: [
+      ["キー割り当ての仕組みを自作", "元にしたアセットは入力がキーの直書きだったため、キーとアクションを結びつける管理クラス（KeyBindingManager など）を作って全体を作り直しました。キー設定画面では、拾ったキーをドラッグするだけで操作を組み替えられます。"],
+      ["手足をコードで動かすキャラクター", "キーの体・腕・足の3つのパーツだけを用意し、手足の動きはスクリプトで回転させて表現しました。キーの文字はUnity側で入れるので、1つの絵ですべてのキーに使い回せます。"],
+      ["スクリプトで組んだムービー演出", "オープニングやボス登場のムービーを、場面ごとにスクリプトで動かしています。効果音やBGMはInspectorから差し替えられるようにしました。"],
+      ["遊びながら覚えるチュートリアル", "最初の会話で「Tabを押して」と案内し、Kキーを右移動に設定するまで先に進めない流れにしました。説明を読まなくても、ゲームの核になる操作を体で覚えられます。"],
+      ["キーを封じるボス戦", "ボスの檻に当たると割り当て中のキーがしばらく使えなくなり、その場でキー設定を組み替えて戦う必要があります。「操作をつくる」というゲームの核を、戦闘にも生かしました。"]
+    ],
     controls: [["Tab", "キー設定をひらく"], ["Esc", "設定"], ["F", "調べる・話す"], ["?", "移動やジャンプは、拾ったキーで自由に決める"]],
     shots: ["images/key-escape-1.jpg", "images/key-escape-2.jpg", "images/key-escape-3.jpg", "images/key-escape-4.jpg", "images/key-escape-5.jpg"],              // ← スクリーンショットを入れる
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/KeyEscape.zip"
@@ -447,6 +460,61 @@ const GAMES = [
     download: "https://github.com/MiyamotoooooO/Portfolio/releases/download/games-v1/Disaster.on.the.Grid.zip"
   },
   {
+    id: "record-drop",
+    title: "RECORD DROP",
+    sub: "レコード × メダルプッシャー",
+    color: "#e64fb4",
+    tags: ["メダルプッシャー", "チーム制作"],
+    status: "制作中",
+    cover: "images/record-drop.jpg",
+    catch: "レコードを回して、メダルを落とせ！",
+    story: "アーケードのメダルプッシャーに、レコードの要素を組み合わせたローグライクゲーム。手に入れたレコードを1枚ずつ流すと、曲に合わせて盤面やモニターの演出が変わり、メダルを落としやすくなる。1ラン約30分で、各エリアの最後にはボスがお邪魔をしてくる。",
+    spec: [
+      ["ジャンル", "メダルプッシャー × ローグライク"],
+      ["対応機種", "PC（Windows）"],
+      ["エンジン", "Unity / C#（3D）"],
+      ["制作", "チーム制作（4人）"],
+      ["状況", "制作中"],
+      ["担当", "SE・BGM・UI・モデル"]
+    ],
+    features: [
+      ["レコードで盤面が変わる", "約40種類のレコードを、所持一覧から選んで流す。グルーヴゲージを使うと、盤面やモニターに曲ごとの演出と効果が出る。"],
+      ["筐体のモニター演出", "盤面の奥のモニターに、レコードに合わせた映像を映す（天気予報のレコードなら天気予報が流れる）。"],
+      ["80年代レトロアーケードの見た目", "ネオンのロゴやレコードジャケット、ドットフィルターで、アーケードの雰囲気を出している。"],
+      ["ボス戦", "各エリアの最後のラウンドで、モニターからボスの手や顔が出てきて盤面を邪魔してくる。"]
+    ],
+    shots: ["images/record-drop-1.jpg", "images/record-drop-2.jpg", "images/record-drop-3.jpg"],
+    download: ""
+  },
+  {
+    id: "cassette-fishing",
+    title: "CassetteFishing",
+    sub: "カセットフィッシング",
+    color: "#c8443a",
+    tags: ["協力ホラー", "チーム制作"],
+    status: "制作中",
+    cover: "images/cassette-fishing.jpg",
+    catch: "声はテープだけ。仲間と魚を釣りあげろ。",
+    story: "室内にも川や池があるのが当たり前の、少し不気味な世界。プレイヤーは調査隊として現場に入り、釣った魚を納品所に運んでノルマを目指す。仲間とは直接話せず、カセットテープに録音した声だけが頼り。そのテープを敵が使って、仲間になりすますこともある。最大4人の一人称協力ゲーム。",
+    spec: [
+      ["ジャンル", "一人称 協力 × 釣り × ホラー"],
+      ["対応機種", "PC（Windows）"],
+      ["エンジン", "Unity / C#（3D）"],
+      ["制作", "チーム制作（4人）"],
+      ["プレイ人数", "1〜4人（オンライン協力）"],
+      ["状況", "制作中"],
+      ["担当", "プレイヤーの動き（釣り・カセット・移動）、モデル、画面フィルター、敵や魚のデータ作成"]
+    ],
+    features: [
+      ["カセットでしか話せない", "ラウンド中は会話ができず、録音したカセットを流して仲間に伝える。死ぬとテープがその場に落ち、敵に使われてしまう。"],
+      ["餌を作る役と釣る役", "調理場で花や虫などの素材をマウス操作で加工して餌を作る。餌のランクで釣れる魚が変わる。"],
+      ["腐る魚と納品", "魚は手で運んで納品所に置く。時間がたつと腐って値段が下がるので、急いで運ぶ協力が必要。"],
+      ["ガチャで手に入るスキン", "釣りでたまに手に入るガチャコインで、釣り竿やスキンを当てられる。"]
+    ],
+    shots: ["images/cassette-fishing-1.jpg", "images/cassette-fishing-2.jpg", "images/cassette-fishing-3.jpg"],
+    download: ""
+  },
+  {
     id: "next",
     title: "NEXT GAME",
     sub: "準備中",
@@ -539,6 +607,7 @@ function openGame(id, fromHash) {
       <section class="sec"><h3>作品データ</h3><dl class="spec">${g.spec.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl></section>
       <section class="sec"><h3>見どころ</h3><div class="feats">${g.features.map(([t, d]) => `<div class="feat"><b>${esc(t)}</b><p>${esc(d)}</p></div>`).join("")}</div></section>
       ${shots ? `<section class="sec"><h3>スクリーンショット</h3><div class="shots">${shots}</div></section>` : ""}
+      ${g.points ? `<section class="sec"><h3>工夫したところ</h3><ol class="points">${g.points.map(([t, d]) => `<li><b>${esc(t)}</b><p>${esc(d)}</p></li>`).join("")}</ol></section>` : ""}
       ${g.controls ? `<section class="sec"><h3>操作</h3><div class="keys">${g.controls.map(([k, d]) => `<div class="keyrow"><kbd>${esc(k)}</kbd><span>${esc(d)}</span></div>`).join("")}</div></section>` : ""}
       <section class="sec dl">
         <a href="${esc(g.download || "#")}" target="_blank" rel="noopener" class="${g.download ? "" : "off"}">⬇ ダウンロード</a>
